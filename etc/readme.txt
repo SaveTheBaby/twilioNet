@@ -5,6 +5,11 @@ https://gemnasium.com/gems/berkshelf/versions (berkshelf all versions)
 
 - Save The Baby Install
 
+# install ruby-devkit
+http://www.rubylife.jp/railsinstall/rails/index4.html
+# install berkshelf
+$ gem install berkshelf --no-ri --no-rdoc -v 2.0.15
+
 1. checkout repository from github.
 2. berks --path=chef-repo/cookbooks
 3. vagrant up
@@ -18,6 +23,7 @@ https://gemnasium.com/gems/berkshelf/versions (berkshelf all versions)
 10. exit
 # in host
 11 vagrant hostmanager
+
 
 
 # other tips.

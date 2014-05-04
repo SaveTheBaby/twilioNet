@@ -94,6 +94,11 @@ class Mother extends Eloquent {
       return $this->defaultValue;
   }
 
+  public function getActive()
+  {
+    return $this->active ? 'Active' : '-';
+  }
+
   public static function parseBirthday($birthday)
   {
     $parsed = date_parse_from_format('Ymd', $birthday);
@@ -149,6 +154,7 @@ class Mother extends Eloquent {
         'Blood',
         'RH',
         '出産予定日',
+        'Active',
       );
       static::$motherColumns = $motherColumns;
     }
@@ -182,6 +188,7 @@ class Mother extends Eloquent {
             $this->getBlood(),
             $this->getRh(),
             $this->getSchedule(),
+            $this->getActive(),
           ),
         ),
       );

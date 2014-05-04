@@ -41,6 +41,9 @@ class InformationController extends TwilioControllerBase {
     $mothers = Mother::all();
     foreach ($mothers as $mother)
     {
+      if (!$mother->active)
+        continue;
+
       $call = $client->account->calls->create(
         $tel_from,
         $mother->phone_number,

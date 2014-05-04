@@ -44,6 +44,9 @@ class HealthCheckController extends TwilioControllerBase {
       if (!$baby->mother)
         continue;
 
+      if (!$baby->mother->active)
+        continue;
+
       $call = $client->account->calls->create(
         $tel_from,
         $baby->mother->phone_number,
