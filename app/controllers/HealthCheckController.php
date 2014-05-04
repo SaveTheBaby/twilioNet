@@ -26,7 +26,7 @@ class HealthCheckController extends TwilioControllerBase {
   {
     if (Session::get('user.name') == 'guest')
     {
-      Session::flash('error-message', 'You can not sent.');
+      Session::flash('error-message', 'You can not sent. Because of "guest" user ID(=test user)');
       return Redirect::to('health-check');
     }
 

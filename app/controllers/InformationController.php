@@ -26,7 +26,7 @@ class InformationController extends TwilioControllerBase {
   {
     if (Session::get('user.name') == 'guest')
     {
-      Session::flash('error-message', 'You can not call.');
+      Session::flash('error-message', 'You can not call. Because of "guest" user ID(=test user)');
       return Redirect::to('information');
     }
 
