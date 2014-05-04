@@ -12,3 +12,4 @@ etc/.vagrant
 app/config/database.php
 app/config/twilio.php
 .svn/
+app/database/seeds/

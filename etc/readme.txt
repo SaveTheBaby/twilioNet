@@ -18,6 +18,7 @@ $ gem install berkshelf --no-ri --no-rdoc -v 2.0.15
 5. cd /vagrant
 6. php composer.phar install
 7. export APPLICATION_ENV=development
+# config detabase.php
 8. php artisan migrate
 9. php artisan db:seed
 10. exit

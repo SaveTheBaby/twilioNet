@@ -1,6 +1,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Save the baby</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   {{HTML::style('css/bootstrap.min.css')}}
