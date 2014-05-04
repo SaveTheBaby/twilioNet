@@ -11,3 +11,4 @@ etc/chef-repo/cookbooks
 etc/.vagrant
 app/config/database.php
 app/config/twilio.php
+.svn/
