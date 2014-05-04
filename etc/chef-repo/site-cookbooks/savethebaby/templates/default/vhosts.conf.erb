@@ -1,0 +1,41 @@
+ServerName savethebaby.dev:80
+ServerAdmin root@savethebaby.dev
+
+DocumentRoot "/vagrant/public"
+
+# vagrantで静的ファイルの修正が反映されない問題を防ぐ
+<Directory "/vagrant">
+  EnableMMAP Off
+  EnableSendfile Off
+</Directory>
+
+NameVirtualHost *:80
+NameVirtualHost *:443
+
+<Directory "/vagrant/public">
+  DirectoryIndex index.php
+  Options All
+  AllowOverride All
+  Order allow,deny
+  Allow from all
+</Directory>
+
+<VirtualHost *:80>
+  ServerName savethebaby.dev
+  DocumentRoot "/vagrant/public"
+  SetEnv APPLICATION_ENV "development"
+</VirtualHost>
+
+<VirtualHost savethebaby:443>
+  ServerName savethebaby.dev:443
+  DocumentRoot "/vagrant/public"
+  SetEnv APPLICATION_ENV "development"
+
+  SSLEngine on
+  SSLProtocol all -SSLv2
+  SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW
+  SSLCertificateFile /etc/pki/tls/certs/localhost.crt
+  SSLCertificateKeyFile /etc/pki/tls/private/localhost.key
+  SSLOptions +StdEnvVars
+  SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
+</VirtualHost>

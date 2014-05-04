@@ -1,0 +1,46 @@
+# encoding: utf-8
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+# vagrant-hostmanager
+# vagrant-vbox-snapshot
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.hostmanager.enabled           = true
+  config.hostmanager.manage_host       = true
+  config.hostmanager.ignore_private_ip = false
+  config.hostmanager.include_offline   = true
+
+  config.vm.box = "CentOS-6.5-x86_64-v20140311"
+  config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.5-x86_64-v20140311.box"
+  config.vm.hostname = "savethebaby.dev"
+  config.vm.network :private_network, ip: "192.168.199.195"
+  config.vm.network :forwarded_port, guest: 80, host: 8080
+  config.vm.synced_folder "../", "/vagrant"
+
+  config.vm.provider :virtualbox do |vb|
+    vb.customize [
+    "modifyvm", :id,
+    "--memory", "512",
+    "--name", "Save The Baby".encode("Windows-31J")
+    ]
+  end
+
+  config.vm.provision :chef_solo do |chef|
+    chef.cookbooks_path = ["chef-repo/cookbooks", "chef-repo/site-cookbooks"]
+    chef.add_recipe "savethebaby"
+    chef.json = {
+      "mysql" => {
+        "server_root_password"   => "vagrant",
+        "server_debian_password" => "vagrant",
+        "server_repl_password"   => "vagrant"
+      }
+    }
+  end
+
+  # データベースインポート
+  #config.vm.provision :shell, inline: "mysql -uroot -pvagrant sakata_development < /vagrant/etc/snapshot/sakata_production.sql"
+end

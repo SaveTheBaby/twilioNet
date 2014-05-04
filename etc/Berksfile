@@ -1,0 +1,6 @@
+site :opscode
+cookbook "yum"
+cookbook "yum-ius"
+cookbook "yum-epel"
+cookbook "mysql"
+cookbook "database"

@@ -5,4 +5,9 @@ composer.lock
 .env.php
 .DS_Store
 Thumbs.db
-etc/
+etc/Berksfile.lock
+etc/docs
+etc/chef-repo/cookbooks
+etc/.vagrant
+app/config/database.php
+app/config/twilio.php
