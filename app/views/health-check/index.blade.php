@@ -59,7 +59,7 @@
 
   @if (Session::get('user.name') == 'guest')
   <div class="text-right">
-    *1 ログインIDがguestの方は送信できません。
+    *1 "guest" user ID(=test user) Can not call.
   </div>
   @endif
 

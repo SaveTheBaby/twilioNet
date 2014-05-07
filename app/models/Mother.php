@@ -45,6 +45,14 @@ class Mother extends Eloquent {
       return $this->defaultValue;
   }
 
+  public function getCountry()
+  {
+    if ($this->country)
+      return $this->country;
+    else
+      return $this->defaultValue;
+  }
+
   public function getSex()
   {
     $sex = array(0 => 'woman', 1 => 'man');
@@ -149,11 +157,12 @@ class Mother extends Eloquent {
     {
       $motherColumns = array(
         'Phone number',
+        'Country',
     //    'Sex',
         'Birthday',
-        'Blood',
+        'Blood Type',
         'RH',
-        '出産予定日',
+        'Expected Delivery Date',
         'Active',
       );
       static::$motherColumns = $motherColumns;
@@ -183,6 +192,7 @@ class Mother extends Eloquent {
           'name'  => '',
           'values' => array(
             $phoneNumber,
+            $this->getCountry(),
     //        $this->getSex(),
             $this->getBirthday(),
             $this->getBlood(),

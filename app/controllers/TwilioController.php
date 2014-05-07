@@ -28,6 +28,7 @@ class TwilioController extends TwilioControllerBase {
   public function getIndex()
 	{
     $phoneNumber = $_REQUEST['From'];
+    $country     = $_REQUEST['FromCountry'];
 
     $mother = Mother::findByPhoneNumber($phoneNumber);
 
@@ -60,10 +61,12 @@ class TwilioController extends TwilioControllerBase {
     else
     {
       $params = array(
-       'PhoneNumber' => $phoneNumber,
+        'PhoneNumber' => $phoneNumber,
+        'Country'     => $country,
       );
       // 未登録(4桁のパスワードを入力)
       return Response::view('twilio_create_password', array(
+        'country'   => $country,
         'actionUrl' => $this->getUrl('create-birthday', $params),
       ))->header('Content-Type', 'text/xml');
     }
@@ -110,6 +113,7 @@ class TwilioController extends TwilioControllerBase {
     $params = array(
       'Password'    => $_REQUEST['Digits'],
       'PhoneNumber' => $_REQUEST['PhoneNumber'],
+      'Country'     => $_REQUEST['Country'],
     );
 
     return Response::view('twilio_birthday', array(
@@ -123,6 +127,7 @@ class TwilioController extends TwilioControllerBase {
       'Birthday'    => $_REQUEST['Digits'],
       'Password'    => $_REQUEST['Password'],
       'PhoneNumber' => $_REQUEST['PhoneNumber'],
+      'Country'     => $_REQUEST['Country'],
     );
 
     return Response::view('twilio_blood', array(
@@ -137,6 +142,7 @@ class TwilioController extends TwilioControllerBase {
       'Birthday'    => $_REQUEST['Birthday'],
       'Password'    => $_REQUEST['Password'],
       'PhoneNumber' => $_REQUEST['PhoneNumber'],
+      'Country'     => $_REQUEST['Country'],
     );
 
     return Response::view('twilio_rh', array(
@@ -147,11 +153,12 @@ class TwilioController extends TwilioControllerBase {
   public function getCreateSchedule()
   {
     $params = array(
-     'Rh'          => $_REQUEST['Digits'],
-     'Blood'       => $_REQUEST['Blood'],
-     'Birthday'    => $_REQUEST['Birthday'],
-     'Password'    => $_REQUEST['Password'],
-     'PhoneNumber' => $_REQUEST['PhoneNumber'],
+      'Rh'          => $_REQUEST['Digits'],
+      'Blood'       => $_REQUEST['Blood'],
+      'Birthday'    => $_REQUEST['Birthday'],
+      'Password'    => $_REQUEST['Password'],
+      'PhoneNumber' => $_REQUEST['PhoneNumber'],
+      'Country'     => $_REQUEST['Country'],
     );
 
     return Response::view('twilio_schedule', array(
@@ -168,6 +175,7 @@ class TwilioController extends TwilioControllerBase {
       'birthday'     => Mother::parseBirthday($_REQUEST['Birthday']),
       'password'     => $_REQUEST['Password'],
       'phone_number' => $_REQUEST['PhoneNumber'],
+      'country'      => $_REQUEST['Country'],
     );
 
     $mother = new Mother($data);

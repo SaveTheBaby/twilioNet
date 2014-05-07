@@ -42,7 +42,7 @@ class Baby extends Eloquent {
 
   public function getSex()
   {
-    $sex = array(0 => 'woman', 1 => 'man');
+    $sex = array(0 => 'female', 1 => 'male');
     if (isset($sex[$this->sex]))
       return $sex[$this->sex];
     else
@@ -185,23 +185,23 @@ class Baby extends Eloquent {
         'values' => array_fill(0, $length, '-'),
       ),
       array(
-        'name'   => 'DPT三種混合',
+        'name'   => 'DPT vaccine',
         'values' => array_fill(0, $length, '-'),
       ),
       array(
-        'name'   => 'OPV/ポリオ',
+        'name'   => 'OPV/Oral Polio Vaccine',
         'values' => array_fill(0, $length, '-'),
       ),
       array(
-        'name'   => 'HMB/B型肝炎',
+        'name'   => 'HBV/Hepatitis B Virus',
         'values' => array_fill(0, $length, '-'),
       ),
       array(
-        'name'   => 'AMV/アンカラ修復ウィルス',
+        'name'   => 'AMV/Ankara Modified Virus',
         'values' => array_fill(0, $length, '-'),
       ),
       array(
-        'name'   => 'MMT/麻疹・風疹・おたふく',
+        'name'   => 'MMR/Measles, Mumps, Rubella',
         'values' => array_fill(0, $length, '-'),
       ),
     );
