@@ -9,7 +9,7 @@ class BabyCheck extends Eloquent {
 
   public static function parseDateOfVisit($dateOfVisit)
   {
-    $parsed = date_parse_from_format('Ymd', $dateOfVisit);
+    $parsed = date_parse_from_format('mdY', $dateOfVisit);
     return date('Y-m-d', mktime(
       $parsed['hour'],
       $parsed['minute'],

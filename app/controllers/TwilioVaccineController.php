@@ -14,39 +14,27 @@ class TwilioVaccineController extends TwilioControllerBase {
    */
   public function getIndex()
   {
-    $type = $_REQUEST['Digits'];
+    $digit = $_REQUEST['Digits'];
 
-    if ($type == '111') // デモ用１
+    if ($digit == '111') // デモ用１
     {
       return Response::view('twilio_demo1')
         ->header('Content-Type', 'text/xml');
     }
-    elseif ($type == '222') // デモ用２
+    elseif ($digit == '222') // デモ用２
     {
       return Response::view('twilio_demo2')
         ->header('Content-Type', 'text/xml');
     }
 
-    $types = array(
-      '1' => 'BCG',
-      '2' => '三種混合ワクチン',
-      '3' => 'ポリオ',
-      '4' => 'HBV/B型肝炎',
-      '5' => 'AMV/アンカラ修復ウィルス',
-      '6' => 'MMR/麻疹・風疹・おたふく',
-    );
-
-    $name = $types[$type];
-
     $params = array(
-      'Type'     => $type,
+      'Type'     => $digit,
       'MotherId' => $_REQUEST['MotherId'],
-      'BabyId'  => $_REQUEST['BabyId'],
+      'BabyId'   => $_REQUEST['BabyId'],
     );
 
     return Response::view('twilio/vaccine/index', array(
       'actionUrl' => $this->getUrl('date', $params),
-      'name'      => $name,
     ))->header('Content-Type', 'text/xml');
   }
 
@@ -56,12 +44,16 @@ class TwilioVaccineController extends TwilioControllerBase {
       'Date'     => $_REQUEST['Digits'],
       'Type'     => $_REQUEST['Type'],
       'MotherId' => $_REQUEST['MotherId'],
-      'BabyId'  => $_REQUEST['BabyId'],
+      'BabyId'   => $_REQUEST['BabyId'],
     );
+
+    $vaccination = new Vaccination;
+    $vaccination->date = Vaccination::parseDate($params['Date']);
 
     return Response::view('twilio/vaccine/date', array(
       'actionUrl' => $this->getUrl('done', $params),
-      'date'      => $params['Date'],
+      'date'      => $vaccination->getDate(),
+      'name'      => $vaccination->getVaccinationTypeName($params['Type']),
     ))->header('Content-Type', 'text/xml');
   }
 

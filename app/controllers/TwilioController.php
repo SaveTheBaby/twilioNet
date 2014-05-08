@@ -73,7 +73,7 @@ class TwilioController extends TwilioControllerBase {
   }
 
   /**
-   * 出産したかを確認
+   * 定期検診か、赤ちゃんの新規登録か
    *
    * @return mixed
    */
@@ -83,18 +83,18 @@ class TwilioController extends TwilioControllerBase {
       'MotherId' => $_REQUEST['MotherId'],
     );
 
-    $answer = $_REQUEST['Digits']; // 1 = Yes / 0 = No
+    $answer = $_REQUEST['Digits']; // 1 = 定期検診 / 2 = 赤ちゃん登録
 
-    if ($answer == '1') // Yes 子供新規登録へ
-    {
-      return Response::view('twilio/add_child/index', array(
-        'actionUrl' => $this->getUrl('sex', $params, 'add-child'),
-      ))->header('Content-Type', 'text/xml');
-    }
-    elseif ($answer == '2') // No 定期検診へ
+    if ($answer == '1') // 定期検診へ
     {
       return Response::view('twilio/check/index', array(
         'actionUrl' => $this->getUrl('date-of-visit', $params, 'check'),
+      ))->header('Content-Type', 'text/xml');
+    }
+    elseif ($answer == '2') // 赤ちゃん新規登録へ
+    {
+      return Response::view('twilio/add_child/index', array(
+        'actionUrl' => $this->getUrl('sex', $params, 'add-child'),
       ))->header('Content-Type', 'text/xml');
     }
     elseif ($answer == '111') // 隠しコマンド1

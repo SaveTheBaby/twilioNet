@@ -109,7 +109,7 @@ class Mother extends Eloquent {
 
   public static function parseBirthday($birthday)
   {
-    $parsed = date_parse_from_format('Ymd', $birthday);
+    $parsed = date_parse_from_format('mdY', $birthday);
     return date('Y-m-d', mktime(
       $parsed['hour'],
       $parsed['minute'],
@@ -121,7 +121,7 @@ class Mother extends Eloquent {
 
   public static function parseSchedule($schedule)
   {
-    $parsed = date_parse_from_format('Ymd', $schedule);
+    $parsed = date_parse_from_format('mdY', $schedule);
     return date('Y-m-d', mktime(
       $parsed['hour'],
       $parsed['minute'],

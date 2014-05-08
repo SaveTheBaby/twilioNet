@@ -20,7 +20,7 @@ class Baby extends Eloquent {
 
   public static function parseBirthday($birthday)
   {
-    $parsed = date_parse_from_format('Ymd', $birthday);
+    $parsed = date_parse_from_format('mdY', $birthday);
     return date('Y-m-d', mktime(
       $parsed['hour'],
       $parsed['minute'],
@@ -180,31 +180,17 @@ class Baby extends Eloquent {
             ' - '.$this->getVaccinationDate('+15 month'),
         ),
       ),
-      array(
-        'name'   => 'BCG',
-        'values' => array_fill(0, $length, '-'),
-      ),
-      array(
-        'name'   => 'DPT vaccine',
-        'values' => array_fill(0, $length, '-'),
-      ),
-      array(
-        'name'   => 'OPV/Oral Polio Vaccine',
-        'values' => array_fill(0, $length, '-'),
-      ),
-      array(
-        'name'   => 'HBV/Hepatitis B Virus',
-        'values' => array_fill(0, $length, '-'),
-      ),
-      array(
-        'name'   => 'AMV/Ankara Modified Virus',
-        'values' => array_fill(0, $length, '-'),
-      ),
-      array(
-        'name'   => 'MMR/Measles, Mumps, Rubella',
-        'values' => array_fill(0, $length, '-'),
-      ),
     );
+
+    $vaccination = new Vaccination;
+    foreach($vaccination->getVaccinationTypeTable() as $type)
+    {
+      $vaccinationTable[] = array(
+        'name'   => $type['name'],
+        'values' => array_fill(0, $length, '-'),
+      );
+    }
+
 
     $vaccinationFillRule = array(
       array(
