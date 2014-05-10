@@ -66,6 +66,13 @@ a small {
     height: 100%;
 }
 
+.yt_wrapper {
+  max-width: 500px;
+  min-width: 375px;
+  margin: 20px auto;
+  border: 1px solid #CCC;  
+}
+
 blockquote {
   border-left:1px solid #e5e5e5;
   margin:0;
