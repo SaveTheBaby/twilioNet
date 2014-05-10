@@ -68,7 +68,7 @@ a small {
 
 .yt_wrapper {
   max-width: 500px;
-  min-width: 375px;
+  min-width: 100px;
   margin: 20px auto;
   border: 1px solid #CCC;  
 }
