@@ -15,8 +15,60 @@ class Baby extends Eloquent {
   protected static $babyCheckColumns;
   protected $babyCheckTable;
   protected $defaultValue = '-';
+  protected static $countPerMonth;
 
   public static $unguarded = true;
+
+
+  //②（折れ線グラフ２）：生後何ヶ月（max２４ヶ月）の赤ちゃんが「何人」
+  //X軸:赤ちゃんの生年月日が現在日から過去24ヶ月以内に該当する件数を1ヶ月毎に表示
+  //Y軸:赤ちゃんの人数
+  //最大値は過去２年間のmax月間誕生数
+  //最小値は過去２年間のmin月間誕生数
+  public static function getCountPerMonth()
+  {
+    if (!static::$countPerMonth)
+    {
+      $babies    = Baby::all();
+      $data      = array_fill(0, 24, 0);
+      $birthdays = array();
+      foreach ($babies as $baby)
+      {
+        $birthday = strtotime($baby->birthday);
+
+        // まだ生まれていない
+        if ($birthday > time())
+          continue;
+
+        // 24カ月以上たっている
+        if ($birthday > strtotime('+24 month'))
+          continue;
+
+        foreach (range(1, 24) as $month)
+        {
+          if ($birthday > strtotime('-'.$month.' month'))
+          {
+            $data[$month-1]++;
+            break;
+          }
+        }
+      }
+
+      foreach (range(0, 23) as $i)
+      {
+        if ($i <= 1)
+          $birthdays[] = "'".$i." month'";
+        else
+          $birthdays[] = "'".$i." months'";
+      }
+
+      static::$countPerMonth = (object)array(
+        'birthdays'  => $birthdays,
+        'babyCounts' => $data,
+      );
+    }
+    return static::$countPerMonth;
+  }
 
   public static function parseBirthday($birthday)
   {
@@ -113,8 +165,8 @@ class Baby extends Eloquent {
       $babyColumns = array(
         'Sex',
         'Birthday',
-        'Blood',
-        'RH',
+        'Blood Type',
+        'Rh',
       );
       static::$babyColumns = $babyColumns;
     }

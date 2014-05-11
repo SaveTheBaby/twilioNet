@@ -18,7 +18,7 @@
               Login ID
             </label>
             <div class="input-group">
-              <input type="text" id="form-login-id" name="LoginId" class="form-control">
+              <input type="text" id="form-login-id" name="LoginId" class="form-control" value="guest">
               <span class="input-group-addon">
                   <i class="glyphicon  glyphicon-user"></i>
                 </span>
@@ -29,7 +29,7 @@
               Password
             </label>
             <div class="input-group">
-              <input type="password" id="form-password" name="Password" class="form-control">
+              <input type="password" id="form-password" name="Password" class="form-control" value="guest">
               <span class="input-group-addon">
                   <i class="glyphicon  glyphicon-lock"></i>
                 </span>

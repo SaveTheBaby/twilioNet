@@ -14,8 +14,51 @@ class Mother extends Eloquent {
   protected static $checkColumns;
   protected $checkTable;
   protected $defaultValue = '-';
-
+  protected static $countPerMonth;
   public static $unguarded = true;
+
+
+  //①（折れ線グラフ１）：何ヶ月（max９ヶ月）の妊婦が、「何人」
+  //X軸:出産予定日が現在日から過去9ヶ月以内(ひと月=30日)に該当する件数を1ヶ月毎に表示
+  //Y軸:妊婦の人数
+  //最大値は過去9ヶ月以内のmax月間妊婦数
+  //最小値は過去9ヶ月以内のmin月間妊婦数
+  public static function getCountPerMonth()
+  {
+    if (!static::$countPerMonth)
+    {
+      $mothers   = Mother::all();
+      $data      = array_fill(1, 9, 0);
+      $schedules = array();
+      foreach ($mothers as $mother)
+      {
+        if (strtotime($mother->schedule) < time())
+          continue;
+
+        foreach (array_reverse(range(0, 8)) as $month)
+        {
+          if (strtotime($mother->schedule) > strtotime('+'.$month.' month'))
+          {
+            $data[9-$month]++;
+            break;
+          }
+        }
+      }
+
+      foreach (range(1, 9) as $i)
+      {
+        if ($i <= 1)
+          $schedules[]    = "'".$i." month'";
+        else
+          $schedules[]    = "'".$i." months'";
+      }
+      static::$countPerMonth = (object)array(
+        'schedules'    => $schedules,
+        'motherCounts' => $data,
+      );
+    }
+    return static::$countPerMonth;
+  }
 
   public function getMaskedPhoneNumber()
   {
@@ -161,7 +204,7 @@ class Mother extends Eloquent {
     //    'Sex',
         'Birthday',
         'Blood Type',
-        'RH',
+        'Rh',
         'Expected Delivery Date',
         'Active',
       );

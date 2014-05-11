@@ -183,7 +183,7 @@
         zoomType: 'xy'
       },
       title: {
-        text: 'Helth Graph'
+        text: 'Health Graph'
       },
       xAxis: [{
         categories: [
@@ -296,7 +296,7 @@
         zoomType: 'xy'
       },
       title: {
-        text: 'Helth Graph'
+        text: 'Health Graph'
       },
       xAxis: [{
         categories: [
