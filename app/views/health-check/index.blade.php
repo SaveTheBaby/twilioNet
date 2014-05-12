@@ -33,10 +33,16 @@
           <label for="form-question">
             Question
           </label>
-          <textarea id="form-question" name="question" class="form-control" rows="6">下痢の赤ちゃんは１を
-発熱は２
-怪我をしている方は３
-特に問題ない赤ちゃんは４を押して下さい。</textarea>
+          <textarea id="form-question" name="question" class="form-control" rows="6">
+＜In the disaster case: mother and baby example 1＞
+Hello, this is "Save the Baby". This is the disaster relief team. On the 10th of September, doctors will come for your baby's health checkup. 
+Press 1, if your baby has diarrhea. 
+Press 2, if your baby has a fever. 
+Press 3, if your baby has an injury. 
+Press 0, to finish. 
+The checkup entry is done. 
+The information about your next checkup will be announced through SMS.
+</textarea>
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary pull-right">

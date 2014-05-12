@@ -33,8 +33,11 @@
           <label for="form-content">
             Message
           </label>
-          <textarea id="form-content" name="content" class="form-control" rows="6">粉ミルクが届きました
-9月9日12時に広場にお集まり下さい</textarea>
+          <textarea id="form-content" name="content" class="form-control" rows="6">
+Up to one year old, your baby will love to be held.  
+You should hold your child if they look scared or worried.  
+Being held by you will relax them!
+          </textarea>
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary pull-right">

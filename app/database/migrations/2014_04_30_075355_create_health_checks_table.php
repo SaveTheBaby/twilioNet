@@ -14,7 +14,7 @@ class CreateHealthChecksTable extends Migration {
 	{
     Schema::create('health_checks', function($table) {
       $table->increments('id');
-      $table->string('question');
+      $table->text('question');
       $table->datetime('delivery_at')->nullable();
       $table->timestamps();
     });
