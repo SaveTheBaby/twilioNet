@@ -28,7 +28,7 @@ class AuthController extends BaseController {
     if (isset($users[$loginId]) && $password == $users[$loginId])
     {
       Session::put('user.name', $loginId);
-      return Redirect::to('.');
+      return Redirect::to('/');
     }
 
     Session::flash('error-message', 'Login failed.');
