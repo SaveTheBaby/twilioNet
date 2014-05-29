@@ -367,12 +367,9 @@ class Mother extends Eloquent {
       {
         $date = date('Y-m-d', strtotime('-'.$i.' day'));
         $count = HealthCheckAnswer::query()
-          ->whereRaw('health_check_id in (51, 52)')
-          ->where('answer', 1)
-          ->whereRaw('date(created_at) = ?', array($date))
-          ->where('mother_id', $this->id)
+          ->whereRaw('(health_check_id IN (51, 52)) AND date(created_at) = ? AND answer = ? AND mother_id = ?', array(
+            $date, 1, $this->id))
           ->count();
-
         if ($count >= 1)
           $values[] = '<img src="'.asset('images/diarrhea.jpg').'">';
         else
@@ -395,14 +392,13 @@ class Mother extends Eloquent {
   {
     if (!$this->hasBabyWithDiarrhea)
     {
-      $date = date('Y-m-d', strtotime('-3 day'));
+      $date = date('Y-m-d');
 
       $diarrheaCount = HealthCheckAnswer::query()
         ->selectRaw('mother_id, DATE(created_at)')
-        ->whereRaw('health_check_id in (51, 52)')
-        ->where('answer', 1)
-        ->whereRaw('DATE(created_at) > ?', array($date))
-        ->where('mother_id', $this->id)
+        ->whereRaw('(health_check_id IN (51, 52)) AND DATE(created_at) = ? AND answer = ? AND mother_id = ?', array(
+          $date, 1, $this->id
+        ))
         ->count();
 
       $this->hasBabyWithDiarrhea = ($diarrheaCount > 0);
@@ -432,9 +428,9 @@ class Mother extends Eloquent {
 
           $diarrheaCount = HealthCheckAnswer::query()
             ->selectRaw('mother_id, DATE(created_at)')
-            ->whereRaw('health_check_id in (51, 52)')
-            ->whereRaw('DATE(created_at) = ?', array($date))
-            ->where('mother_id', $baby->mother->id)
+            ->whereRaw('(health_check_id IN (51, 52)) AND DATE(created_at) = ? AND mother_id = ? AND answer = ?', array(
+              $date, $baby->mother->id, 1
+            ))
             ->count();
 
           if ($diarrheaCount > 0)

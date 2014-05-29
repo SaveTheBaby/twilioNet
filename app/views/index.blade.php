@@ -3,7 +3,7 @@
 @section('header_left')
 <div class="header-explain panel panel-default">
   {{ nl2br(<<< __MESSAGE__
-  Please call +81-50-3159-6972 and follow an instruction to sign up as a mother. Once you complete the signup process, your information will be on the top of the Mother's List. Also, please check "How Dashboard for Doctors work" for more details.
+  Please call +81-50-3159-6972 and follow the instruction to sign up as a mother. Once you complete the signup process, your information will be on the top of the Mother's List. Also, please check "How Dashboard for Doctors work" for more details.
   *Currently, international phone rates are applied for calling from outside Japan. To avoid this, we are going to set up Twilio phone numbers in different countries in the near feature.
 __MESSAGE__
   ) }}
