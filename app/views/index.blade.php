@@ -1,5 +1,24 @@
 @extends('layouts.base')
 
+@section('header_left')
+<div class="header-explain panel panel-default">
+  {{ nl2br(<<< __MESSAGE__
+  Please call +81-50-3159-6972 and follow an instruction to sign up as a mother. Once you complete the signup process, your information will be on the top of the Mother's List. Also, please check "How Dashboard for Doctors work" for more details.
+  *Currently, international phone rates are applied for calling from outside Japan. To avoid this, we are going to set up Twilio phone numbers in different countries in the near feature.
+__MESSAGE__
+  ) }}
+</div>
+@stop
+
+@section('header_right')
+<div class="header-explain panel panel-default">
+  {{ nl2br(<<< __MESSAGE__
+  There are two key features of simultaneous calling: "Notification" and "Questionnaire". "Notification" allows medical personnel to call simultaneously to mothers with any messages, and "Questionnaire" let medical personnel collect and analyze data of mothers and their babies. Please click "Notification" and "Questionnaire" for more details.
+__MESSAGE__
+  ) }}
+</div>
+@stop
+
 @section('content')
 
 <div class="row">
@@ -35,7 +54,11 @@
 <div class="babies-chart" style="width:100%; height:400px; margin: 2em 0;"></div>
 
 <div class="user-list">
-  <h2>Mother's ID list</h2>
+
+  <div class="panel panel-default pull-right header-explain">
+    Click "details" for more information of each mother and her baby
+  </div>
+  <h2>Mother's List</h2>
 
   @if (count($mothers) > 0)
   <table class="table table-bordered">
@@ -46,11 +69,18 @@
       </th>
       @endforeach
       <th>
+        Today
+        <br>
+        Baby's Current State
+      </th>
+      <th>
         &nbsp;
       </th>
     </tr>
+    <?php $i=0; ?>
     @foreach ($mothers as $mother)
       @foreach ($mother->getMotherTable() as $c => $spec)
+      <?php $btnClass = $i++ < 2 ? 'btn-danger' : 'btn-success' ?>
       <tr>
         @foreach ($spec['values'] as $value)
         <td>
@@ -58,7 +88,10 @@
         </td>
         @endforeach
         <td class="text-center">
-          <a href="info/{{ $mother->id }}" class="btn btn-success btn-block btn-sm">Info</a>
+          <img src="{{ $mother->getHasBabyWithDiarrhea() ? asset('images/diarrhea.jpg') : asset('images/nothing.jpg') }}">
+        </td>
+        <td class="text-center">
+          <a href="info/{{ $mother->id }}" class="btn {{  $btnClass }} btn-block btn-sm">Detail</a>
         </td>
       </tr>
       @endforeach
@@ -77,12 +110,19 @@ $(function () {
       zoomType: 'xy'
     },
     title: {
-      text: 'Number of mother(in the past 9 months)'
+      text: 'Number of pregnant women(in the past 9 months)'
     },
     xAxis: [{
+      min: 1,
       categories: [
         <?php echo implode(', ', Mother::getCountPerMonth()->schedules) ?>
-      ]
+      ],
+      title: {
+        text: 'Months of Pregnancy',
+        style: {
+          color: '#185755'
+        }
+      }
     }],
     yAxis: [{ // height
       min: 0,
@@ -96,9 +136,9 @@ $(function () {
         }
       },
       title: {
-        text: 'Number of mother',
+        text: 'Number of pregnant women',
         style: {
-          color: '#185755'
+          color: '#00ADA7'
         }
       },
       opposite: false // 左側に表示
@@ -137,12 +177,18 @@ $(function () {
         zoomType: 'xy'
       },
       title: {
-        text: 'Number of baby(in the past 24 months)'
+        text: 'Number of babies(in the past 24 months)'
       },
       xAxis: [{
         categories: [
           <?php echo implode(', ', Baby::getCountPerMonth()->birthdays) ?>
-        ]
+        ],
+        title: {
+          text: 'Age in Months',
+          style: {
+            color: '#185755'
+          }
+        }
       }],
       yAxis: [{ // height
         allowDecimals: false,
@@ -156,15 +202,39 @@ $(function () {
           }
         },
         title: {
-          text: 'Number of baby',
+          text: 'Number of babies',
           style: {
-            color: '#185755'
+            color: '#D9C099'
           }
         },
         opposite: false // 左側に表示
-      }],
+      },{ // height
+          allowDecimals: false,
+          min: 0,
+          labels: {
+            formatter: function() {
+              return this.value;
+            },
+            style: {
+              color: '#185755'
+            }
+          },
+          title: {
+            text: 'Numer of cases of diarrhea'
+          },
+          opposite: true // 右に表示
+        }
+
+      ],
       tooltip: {
         shared: true
+      },
+      plotOptions: {
+        column: {
+          pointPadding: -0.2
+          ,
+          borderWidth: 0
+        }
       },
       legend: {
         layout: 'vertical',
@@ -176,11 +246,24 @@ $(function () {
         backgroundColor: '#FFF8D8'
       },
       series: [{
-        name: 'Baby',
+        name: 'All Babies',
         color: '#D9C099',
-        type: 'spline',
+        type: 'column',
         data: [
           <?php echo implode(', ', Baby::getCountPerMonth()->babyCounts) ?>
+        ],
+        marker: {
+          enabled: true
+        },
+        tooltip: {
+          valueSuffix: ' '
+        }
+      }, {
+        name: 'Babies with Diarrhea',
+        color: '#185755',
+        type: 'column',
+        data: [
+          <?php echo implode(', ', Mother::getDiarrheaCountPerMonth()->one) ?>
         ],
         marker: {
           enabled: true

@@ -15,8 +15,11 @@ class Mother extends Eloquent {
   protected $checkTable;
   protected $defaultValue = '-';
   protected static $countPerMonth;
-  public static $unguarded = true;
+  protected $diarrheaTable;
+  protected static $diarrheaColumns;
+  protected $hasBabyWithDiarrhea;
 
+  public static $unguarded = true;
 
   //①（折れ線グラフ１）：何ヶ月（max９ヶ月）の妊婦が、「何人」
   //X軸:出産予定日が現在日から過去9ヶ月以内(ひと月=30日)に該当する件数を1ヶ月毎に表示
@@ -48,9 +51,9 @@ class Mother extends Eloquent {
       foreach (range(1, 9) as $i)
       {
         if ($i <= 1)
-          $schedules[]    = "'".$i." month'";
+          $schedules[]    = "'".$i."'";
         else
-          $schedules[]    = "'".$i." months'";
+          $schedules[]    = "'".$i."'";
       }
       static::$countPerMonth = (object)array(
         'schedules'    => $schedules,
@@ -271,11 +274,11 @@ class Mother extends Eloquent {
           'values' => array_fill(0, $length, '-'),
         ),
         array(
-          'name'   => 'Blood pressur',
+          'name'   => 'Blood pressure',
           'values' => array_fill(0, $length, '-'),
         ),
         array(
-          'name'   => 'Temperature',
+          'name'   => 'Body Temperature',
           'values' => array_fill(0, $length, '-'),
         ),
         array(
@@ -335,4 +338,113 @@ class Mother extends Eloquent {
     return implode(', ', $dataList);
   }
 
+  public static function getDiarrheaColumns()
+  {
+    if (!static::$diarrheaColumns)
+    {
+      $diarrheaColumns = array(
+        date('F d Y', strtotime('-6 day')),
+        date('F d Y', strtotime('-5 day')),
+        date('F d Y', strtotime('-4 day')),
+        date('F d Y', strtotime('-3 day')),
+        date('F d Y', strtotime('-2 day')),
+        date('F d Y', strtotime('-1 day')),
+        date('F d Y'),
+      );
+      static::$diarrheaColumns = $diarrheaColumns;
+    }
+
+    return static::$diarrheaColumns;
+  }
+
+
+  public function getDiarrheaTable()
+  {
+    if (!$this->diarrheaTable)
+    {
+      $values = array();
+      foreach (array_reverse(range(0, 6)) as $i)
+      {
+        $date = date('Y-m-d', strtotime('-'.$i.' day'));
+        $count = HealthCheckAnswer::query()
+          ->whereRaw('health_check_id in (51, 52)')
+          ->where('answer', 1)
+          ->whereRaw('date(created_at) = ?', array($date))
+          ->where('mother_id', $this->id)
+          ->count();
+
+        if ($count >= 1)
+          $values[] = '<img src="'.asset('images/diarrhea.jpg').'">';
+        else
+          $values[] = '<img src="'.asset('images/nothing.jpg').'">';
+      }
+      $diarrheaTable = array(
+        array(
+          'name'   => '',
+          'values' => $values,
+        )
+      );
+
+      $this->diarrheaTable = $diarrheaTable;
+    }
+
+    return $this->diarrheaTable;
+  }
+
+  public function getHasBabyWithDiarrhea()
+  {
+    if (!$this->hasBabyWithDiarrhea)
+    {
+      $date = date('Y-m-d', strtotime('-3 day'));
+
+      $diarrheaCount = HealthCheckAnswer::query()
+        ->selectRaw('mother_id, DATE(created_at)')
+        ->whereRaw('health_check_id in (51, 52)')
+        ->where('answer', 1)
+        ->whereRaw('DATE(created_at) > ?', array($date))
+        ->where('mother_id', $this->id)
+        ->count();
+
+      $this->hasBabyWithDiarrhea = ($diarrheaCount > 0);
+    }
+
+    return $this->hasBabyWithDiarrhea;
+  }
+
+  protected static $diarrheaCountPerMonth;
+
+  public static function getDiarrheaCountPerMonth()
+  {
+    if (!static::$diarrheaCountPerMonth)
+    {
+      $diarrheaCountPerMonth = (object)array(
+        'one' => array_fill(0, 24, 0),
+      );
+      $babyPerMonth = Baby::getBabyPerMonth();
+      foreach ($babyPerMonth as $month => $babies)
+      {
+        foreach ($babies as $baby)
+        {
+          if (!$baby->mother)
+            continue;
+
+          $date = date('Y-m-d');
+
+          $diarrheaCount = HealthCheckAnswer::query()
+            ->selectRaw('mother_id, DATE(created_at)')
+            ->whereRaw('health_check_id in (51, 52)')
+            ->whereRaw('DATE(created_at) = ?', array($date))
+            ->where('mother_id', $baby->mother->id)
+            ->count();
+
+          if ($diarrheaCount > 0)
+            $diarrheaCountPerMonth->one[$month]++;
+        }
+      }
+
+      static::$diarrheaCountPerMonth = $diarrheaCountPerMonth;
+    }
+
+    return static::$diarrheaCountPerMonth;
+  }
 }

@@ -16,6 +16,7 @@ class Baby extends Eloquent {
   protected $babyCheckTable;
   protected $defaultValue = '-';
   protected static $countPerMonth;
+  protected static $babyPerMonth;
 
   public static $unguarded = true;
 
@@ -57,9 +58,9 @@ class Baby extends Eloquent {
       foreach (range(0, 23) as $i)
       {
         if ($i <= 1)
-          $birthdays[] = "'".$i." month'";
+          $birthdays[] = "'".$i."'";
         else
-          $birthdays[] = "'".$i." months'";
+          $birthdays[] = "'".$i."'";
       }
 
       static::$countPerMonth = (object)array(
@@ -68,6 +69,39 @@ class Baby extends Eloquent {
       );
     }
     return static::$countPerMonth;
+  }
+
+  public static function getBabyPerMonth()
+  {
+    if (!static::$babyPerMonth)
+    {
+      $babies = Baby::all();
+      $babyPerMonth = array_fill(0, 24, array());
+      foreach ($babies as $baby)
+      {
+        $birthday = strtotime($baby->birthday);
+
+        // まだ生まれていない
+        if ($birthday > time())
+          continue;
+
+        // 24カ月以上たっている
+        if ($birthday > strtotime('+24 month'))
+          continue;
+
+        foreach (range(1, 24) as $month)
+        {
+          if ($birthday > strtotime('-'.$month.' month'))
+          {
+            $babyPerMonth[$month-1][] = $baby;
+            break;
+          }
+        }
+      }
+
+      static::$babyPerMonth = $babyPerMonth;
+    }
+    return static::$babyPerMonth;
   }
 
   public static function parseBirthday($birthday)
@@ -275,7 +309,7 @@ class Baby extends Eloquent {
       /** @var Illuminate\Database\Eloquent\Collection $vaccinationsByType */
       $vaccinationsByType = $this->vaccinations()
         ->where('type', '=', $spec['type'])
-        ->orderBy('date', 'asc')
+        ->orderBy('date', 'desc')
         ->take(count($spec['rule']))->get();
       foreach ($spec['rule'] as $c)
       {
@@ -317,11 +351,11 @@ class Baby extends Eloquent {
           'values' => array_fill(0, $length, '-'),
         ),
         array(
-          'name'   => 'Temperature',
+          'name'   => 'Height(in cm)',
           'values' => array_fill(0, $length, '-'),
         ),
         array(
-          'name'   => 'Height(in cm)',
+          'name'   => 'Body Temperature',
           'values' => array_fill(0, $length, '-'),
         ),
       );
@@ -329,8 +363,8 @@ class Baby extends Eloquent {
       {
         $babyCheckTable[0]['values'][$i] = $check->getDateOfVisit();
         $babyCheckTable[1]['values'][$i] = $check->getWeightInKg();
-        $babyCheckTable[2]['values'][$i] = $check->getTemperature();
-        $babyCheckTable[3]['values'][$i] = $check->getHeight();
+        $babyCheckTable[2]['values'][$i] = $check->getHeight();
+        $babyCheckTable[3]['values'][$i] = $check->getTemperature();
       }
 
       $this->babyCheckTable = $babyCheckTable;

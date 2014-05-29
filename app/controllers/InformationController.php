@@ -4,22 +4,32 @@ class InformationController extends TwilioControllerBase {
 
   public function getIndex()
   {
-    $information = Information::query()->orderBy('id', 'desc')->get();
+    $isEmergency = (Input::get('emergency', false) === '');
+    $query = Information::query();
+    if ($isEmergency)
+      $query->where('type', 2);
+    else
+      $query->where('type', 1);
+
+    $information = $query->orderBy('id', 'desc')->get();
     return View::make('information/index', array(
+      'isEmergency' => $isEmergency,
       'information' => $information,
     ));
   }
 
   public function postIndex()
   {
-    $content = $_REQUEST['content'];
+    $content = Input::get('content');
+    $isEmergency = (Input::get('emergency', false) === '');
 
     $information = new Information(array(
+      'type'    => $isEmergency ? 2 : 1,
       'content' => $content,
     ));
     $information->save();
 
-    return Redirect::to('information');
+    return Redirect::to('information'.($isEmergency ? '?emergency':''));
   }
 
   public function getCall()

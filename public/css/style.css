@@ -30,3 +30,18 @@
   padding: 1em;
   margin-top: 80px;
 }
+
+.header-explain {
+  font-size: 12px;
+  padding: 1em;
+  margin-top: 1em;
+}
+
+.emergency {
+  background: #ed1b24;
+}
+
+.main {
+
+  margin-top: 20px;
+}

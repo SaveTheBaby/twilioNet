@@ -30,6 +30,22 @@ class HealthCheck extends Eloquent {
       return $this->defaultValue;
   }
 
+  protected static $type = array(
+    1 => 'Normal',
+    2 => 'Disaster',
+  );
+
+  public function getType()
+  {
+    if ($this->type)
+    {
+      if (isset(static::$type[$this->type]))
+        return static::$type[$this->type];
+    }
+
+    return $this->defaultValue;
+  }
+
 
   public static function getHealthCheckColumns()
   {
@@ -70,7 +86,7 @@ class HealthCheck extends Eloquent {
         ),
         array(
           'type'  => 'link',
-          'value' => 'Sent',
+          'value' => 'Call',
           'attributes' => array(
             'url'   => URL::to('health-check/sent?Id='.$this->id),
             'class' => 'btn btn-success'

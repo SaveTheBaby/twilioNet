@@ -18,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.5-x86_64-v20140311.box"
   config.vm.hostname = "savethebaby.dev"
   config.vm.network :private_network, ip: "192.168.199.195"
-#  config.vm.network :forwarded_port, guest: 80, host: 8080
+  config.vm.network :forwarded_port, guest: 80, host: 8080
   config.vm.synced_folder "../", "/vagrant"
 
   config.vm.provider :virtualbox do |vb|

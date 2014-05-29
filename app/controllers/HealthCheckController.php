@@ -4,17 +4,27 @@ class HealthCheckController extends TwilioControllerBase {
 
   public function getIndex()
   {
-    $healthCheck = HealthCheck::query()->orderBy('id', 'desc')->get();
+    $isEmergency = (Input::get('emergency', false) === '');
+    $query =  HealthCheck::query();
+    if ($isEmergency)
+      $query->where('type', 2);
+    else
+      $query->where('type', 1);
+
+    $healthCheck = $query->orderBy('id', 'desc')->get();
     return View::make('health-check/index', array(
+      'isEmergency' => $isEmergency,
       'healthCheck' => $healthCheck,
     ));
   }
 
   public function postIndex()
   {
-    $question = $_REQUEST['question'];
+    $question = Input::get('question');
+    $isEmergency = (Input::get('emergency', false) === '');
 
     $healthCheck = new HealthCheck(array(
+      'type'      => $isEmergency ? 2 : 1,
       'question' => $question,
     ));
     $healthCheck->save();

@@ -39,7 +39,7 @@ class Check extends Eloquent {
 
   public function getBloodPressur()
   {
-    return $this->blood_pressur;
+    return str_replace('.', '/', $this->blood_pressur);
   }
 
   public function getTemperature()

@@ -81,6 +81,14 @@ template "/etc/phpMyAdmin/config.inc.php" do
   source "config.inc.php.erb"
 end
 
+template ".bash_profile" do
+  source ".bash_profile.erb"
+  path   "/home/vagrant/.bash_profile"
+  mode   0644
+  owner  "vagrant"
+  group  "vagrant"
+end
+
 service "httpd" do
   action [:start, :enable]
   supports :status => true, :resart => true
@@ -89,4 +97,9 @@ end
 service "mysqld" do
   action [:start, :enable]
   supports :status => true, :resart => true
+end
+
+# apache start after vagrant mounted
+template "/etc/init/play.conf" do
+  source "etc-init-play.conf.erb"
 end

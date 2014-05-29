@@ -19,7 +19,9 @@
 @include('messages')
 
 <div class="user-list">
-  <h2>Mother</h2>
+  <h2>
+    ID
+  </h2>
 
   <table class="table table-bordered">
     <tr>
@@ -36,16 +38,18 @@
         {{ $value }}
       </td>
       @endforeach
+
     </tr>
     @endforeach
   </table>
 </div>
 
-<hr>
-
+ <hr>
 
 <div class="user-list">
-  <h2>Mother's check</h2>
+  <h2>
+    Maternal Health Data
+  </h2>
 
   <div class="mother-check-chart" style="width:100%; height:400px;"></div>
 
@@ -101,7 +105,34 @@
     @endforeach
   </table>
 
+  <hr>
+
+  <h2>Cases of Diarrhea</h2>
+
+  <table class="table table-bordered">
+    <tr>
+      @foreach (Mother::getDiarrheaColumns() as $i)
+      <th>
+        {{ $i }}
+      </th>
+      @endforeach
+    </tr>
+    @foreach ($mother->getDiarrheaTable() as $c => $spec)
+    <tr>
+      @foreach ($spec['values'] as $value)
+      <td class="text-center">
+        {{ $value }}
+      </td>
+      @endforeach
+    </tr>
+    @endforeach
+  </table>
+
+  <hr>
+
   <div class="baby-check-chart" style="width:100%; height:400px;"></div>
+
+  <hr>
 
   <table class="table table-bordered">
     <tr>
@@ -139,7 +170,7 @@
 <hr>
 
 <div class="user-list">
-  <h2>Baby's vaccination</h2>
+  <h2>Baby's Vaccination Records</h2>
 
   @if ($mother->baby)
 
@@ -175,7 +206,11 @@
   @endif
 
 </div>
+@endsection
 
+
+
+@section('inline_script')
 <script type="text/javascript">
   $(function () {
     $('.mother-check-chart').highcharts({
@@ -183,7 +218,7 @@
         zoomType: 'xy'
       },
       title: {
-        text: 'Health Graph'
+        text: 'Mother\'s Health Figures'
       },
       xAxis: [{
         categories: [
@@ -296,7 +331,7 @@
         zoomType: 'xy'
       },
       title: {
-        text: 'Health Graph'
+        text: 'Baby\'s Health Figures'
       },
       xAxis: [{
         categories: [
@@ -405,4 +440,4 @@
     @endif
   });
 </script>
-@endsection
+@stop

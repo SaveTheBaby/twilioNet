@@ -1,5 +1,18 @@
 @extends('layouts.base')
 
+@section('header_left')
+<div class="header-explain panel panel-default">
+  {{ nl2br(<<< __MESSAGE__
+  The simultaneous calling function has already been implemented; however, "Call" buttons don't work since this is a demonstration version.
+__MESSAGE__
+  ) }}
+</div>
+@stop
+
+@section('header_right')
+@stop
+
+
 @section('content')
 
 
@@ -7,7 +20,7 @@
   <div class="col-sm-12">
 
     @include('action')
-
+    <a href="{{ URL::to('information') }}?emergency" class="btn btn-danger">Emergency</a>
     <a href="{{ URL::to('/') }}" class="btn btn-default pull-right" style="margin-right:4px">
       Back to Home
     </a>
@@ -23,15 +36,18 @@
 <div class="user-list">
 
   <h2>
-    Information
+    Notification
+    <small>
+      Simultanious calling to mothers with any messages
+    </small>
   </h2>
 
   <div class="row">
     <div class="col-sm-12">
-      <form action="{{ URL::current() }}" method="post" autocomplete="off">
+      <form action="{{ URL::current() }}{{ isset($isEmergency) && $isEmergency ? '?emergency' : '' }}" method="post" autocomplete="off">
         <div class="form-group">
           <label for="form-content">
-            Message
+            Create new message
           </label>
           <textarea id="form-content" name="content" class="form-control" rows="6">
 Up to one year old, your baby will love to be held.  
@@ -43,6 +59,14 @@ Being held by you will relax them!
           <button type="submit" class="btn btn-primary pull-right">
             Add
           </button>
+          <!--
+          <div class="col-md-2 pull-right">
+            <select name='type' class="form-control">
+              <option value="1">Normal</option>
+              <option value="2">Disaster</option>
+            </select>
+          </div>
+          -->
         </div>
       </form>
     </div>
@@ -52,10 +76,10 @@ Being held by you will relax them!
 
 <hr>
 
-<div class="user-list">
+<div id="information-list" class="user-list">
 
   <h2>
-    Information List
+    Message list
   </h2>
 
   @if (Session::get('user.name') == 'guest')
@@ -81,7 +105,9 @@ Being held by you will relax them!
         @if ($row['type'] == 'text')
           {{ $row['value'] }}
         @elseif ($row['type'] == 'link')
-          <a href="{{ $row['attributes']['url'] }}" class="{{ $row['attributes']['class'] }}">{{ $row['value'] }}</a>
+          <a href="{{ $row['attributes']['url'].(isset($isEmergency) && $isEmergency ? '&emergency' : '') }}" class="{{ $row['attributes']['class'] }}">
+            {{ $row['value'] }}
+          </a>
         @endif
       </td>
       @endforeach

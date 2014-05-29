@@ -26,7 +26,7 @@ class AlterMothersTableAddCountry extends Migration {
   {
     Schema::table('mothers', function($table)
     {
-      $table->dropColumn('string');
+      $table->dropColumn('country');
     });
   }
 }

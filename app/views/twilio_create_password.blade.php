@@ -18,14 +18,33 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
     <Say voice="woman">
       Hello,This is Save the Baby!
     </Say>
+    <Pause />
     <Say voice="woman">
-      Save the Baby is a service of digitalized Maternal and Child Health Handbook for developing countries. It’s a service to record health data using telephone line to suit for the communication environment of the developing countries.This service is useful not only in daily life but also in time of disaster.
+      Save the Baby is a service of digitalized Maternal and Child Health Handbook for developing countries.
     </Say>
+    <Pause />
     <Say voice="woman">
-      Please read user agreement before the new registration, and please regist if you agree.User agreement is In preparation.
+      It’s a service to record health data using telephone line to suit for the communication environment of the developing countries.
     </Say>
+    <Pause />
     <Say voice="woman">
-      First input 4-digit number and then enter the Pound key. This is your ID number.
+      This service is useful not only in daily life but also in time of disaster.
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      Please read user agreement before the new registration, and please regist if you agree.
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      User agreement is In preparation.
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      First input 4-digit number and then enter the Pound key.
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      This is your ID number.
     </Say>
   </Gather>
 </Response>
