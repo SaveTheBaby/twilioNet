@@ -12,8 +12,13 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
     <Say voice="woman">
       Pregnant mother's periodic medical check-up record.
     </Say>
+    <Pause />
     <Say voice="woman">
-      Please input the mother's 4-digit ID number and then enter the pound key.
+      Please input the mother's 4-digit ID number,
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      and then enter the pound key.
     </Say>
   </Gather>
 </Response>

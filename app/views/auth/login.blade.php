@@ -4,6 +4,7 @@
 @section('header_left')
 <div class="header-explain panel panel-default">
   {{ nl2br(<<< __MESSAGE__
+  [Explanation]
   Save the Baby is a service of digitalized Maternal and Child Health Handbook for developing countries. It can customize recording items such as necessary vaccination types and messages from the medical personnel adapting to the local situations.
 __MESSAGE__
   ) }}
@@ -13,6 +14,7 @@ __MESSAGE__
 @section('header_right')
 <div class="header-explain panel panel-default">
   {{ nl2br(<<< __MESSAGE__
+  [Explanation]
   By digitalizing Maternal and Child Health Handbook and connect mothers and children with a view to prevent and mitigate their suffering in disasters. Health care centers and community health centers of the region can define the area with high-risk pregnant women and parturient mothers. It can also gather information including the number of infants in the area.
 __MESSAGE__
   ) }}

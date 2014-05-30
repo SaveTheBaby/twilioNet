@@ -9,8 +9,25 @@
 ?>
 <Response>
   <Gather action='<?php echo $actionUrl ?>' method='GET' finishOnKey='#' timeout="60">
+    <Pause />
     <Say voice="woman">
-      Please input expected delivery date month, day, year, and then enter the pound key.
+      Please input expected delivery date, 
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      for instance month in two numbers, 
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      day in two numbers, 
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      year in four numbers,   
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      and then enter the pound key.  
     </Say>
   </Gather>
 </Response>

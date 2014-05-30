@@ -32,7 +32,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
     </Say>
     <Pause />
     <Say voice="woman">
-      Please read user agreement before the new registration, and please regist if you agree.
+      Please read user agreement before the new registration, and please register if you agree.
     </Say>
     <Pause />
     <Say voice="woman">
@@ -40,7 +40,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
     </Say>
     <Pause />
     <Say voice="woman">
-      First input 4-digit number and then enter the Pound key.
+      First input 4-digit number, and then enter the Pound key.
     </Say>
     <Pause />
     <Say voice="woman">

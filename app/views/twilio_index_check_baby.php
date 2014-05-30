@@ -12,14 +12,21 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 ?>
 <Response>
   <Gather action='<?php echo $actionUrl ?>' method='GET' finishOnKey='#' timeout="60">
+  	<Pause />
     <Say voice="woman">
       Hello,This is Save the Baby!
     </Say>
+    <Pause />
     <Say voice="woman">
       Press 1, if this is the mother's number.
     </Say>
+    <Pause />
     <Say voice="woman">
-      Press 2, if this is the Baby's record, and then enter the pound key.
+      Press 2, if this is the Baby's record,
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      and then enter the pound key.  
     </Say>
   </Gather>
 </Response>

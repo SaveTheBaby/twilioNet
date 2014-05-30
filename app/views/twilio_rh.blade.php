@@ -10,14 +10,21 @@
 ?>
 <Response>
   <Gather action='<?php echo $actionUrl ?>' method='GET' finishOnKey='#' timeout="60">
+    <Pause />
     <Say voice="woman">
-      Press 1 for Rh+
+      Press 1 for Rh plus,
     </Say>
+    <Pause />
     <Say voice="woman">
-      Press 2 for Rh-
+      Press 2 for Rh minus,
     </Say>
+    <Pause />
     <Say voice="woman">
-      Press 0, if not known, and then enter the pound key.
+      Press 0, if not known,
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      and then enter the pound key.
     </Say>
   </Gather>
 </Response>

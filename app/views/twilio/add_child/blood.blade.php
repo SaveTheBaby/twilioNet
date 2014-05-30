@@ -15,22 +15,28 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 ?>
 <Response>
   <Gather action='<?php echo $actionUrl ?>' method='GET' finishOnKey='#' timeout="60">
-    <Say>
-      Please choose the baby's blood type,and then enter the pound key.
+    <Pause /> 
+    <Say voice="woman">
+      Please choose the baby's blood type, and then enter the pound key.
     </Say>
-    <Say>
+    <Pause />
+    <Say voice="woman">
       Press 1 for type A
     </Say>
-    <Say>
+    <Pause />
+    <Say voice="woman">
       Press 2 for type B
     </Say>
-    <Say>
+    <Pause />
+    <Say voice="woman">
       Press 3 for type O
     </Say>
-    <Say>
+    <Pause />
+    <Say voice="woman">
       Press 4 for type AB
     </Say>
-    <Say>
+    <Pause />
+    <Say voice="woman">
       Press 0, if not known
     </Say>
   </Gather>

@@ -6,7 +6,12 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 //これで、登録は完了しました。ありがとうございました。
 ?>
 <Response>
+  <Pause />
   <Say voice="woman">
-    This is the end of the registration.Thank you very much.
+    This is the end of the registration.
+  </Say>
+  <Pause />
+  <Say voice="woman">
+    Thank you very much.
   </Say>
 </Response>

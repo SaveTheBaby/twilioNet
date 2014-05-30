@@ -3,7 +3,9 @@
 @section('header_left')
 <div class="header-explain panel panel-default">
   {{ nl2br(<<< __MESSAGE__
+  [Explanation]
   The simultaneous calling function has already been implemented; however, "Call" buttons don't work since this is a demonstration version.
+  A push on the emergency button will also change Message list to business at the time of a disaster.
 __MESSAGE__
   ) }}
 </div>

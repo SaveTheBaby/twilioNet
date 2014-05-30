@@ -9,16 +9,20 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 //ありがとうございました。」
 ?>
 <Response>
-  <Say>
+  <Pause /> 
+  <Say voice="woman">
     This is the end of the registration.
   </Say>
-  <Say>
+  <Pause />
+  <Say voice="woman">
     The baby's vaccination record was be registered.
   </Say>
-  <Say>
+  <Pause />
+  <Say voice="woman">
     The next vaccination appointment will be sent by SMS.
   </Say>
-  <Say>
+  <Pause />
+  <Say voice="woman">
     Thank you very much.
   </Say>
 </Response>

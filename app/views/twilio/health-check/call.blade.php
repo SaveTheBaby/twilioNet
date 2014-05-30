@@ -15,8 +15,21 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
   <Gather action='<?php echo $actionUrl ?>' method='GET' finishOnKey='#' timeout="60">
      <Say voice="woman">
        Hello,This is Save the Baby!
-       Please tell us the condition of the children.Your baby is old {{ $afterBirth }} months today.
+     </Say>   
+     <Pause />
+     <Say voice="woman">
+       Please tell us the condition of the children.
+     </Say>   
+     <Pause />
+     <Say voice="woman">
+       Your baby is old {{ $afterBirth }} months today.
+     </Say>  
+     <Pause />
+     <Say voice="woman">
        {{ $question }}
+     </Say>  
+     <Pause />
+     <Say voice="woman">
        and then enter the pound key.
      </Say>
   </Gather>

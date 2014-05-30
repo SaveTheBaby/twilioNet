@@ -9,7 +9,11 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 <Response>
   <Gather action='<?php echo $actionUrl ?>' method='GET' finishOnKey='#' timeout="60">
     <Say voice="woman">
-      Please input date of vaccination, month, day, year, and then enter the pound key.
+      Please input date of vaccination, month, day, year, 
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      and then enter the pound key.  
     </Say>
   </Gather>
 </Response>

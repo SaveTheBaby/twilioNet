@@ -14,23 +14,33 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 ?>
 <Response>
   <Gather action='<?php echo $actionUrl ?>' method='GET' finishOnKey='#' timeout="60">
+    <Pause />
     <Say voice="woman">
       Please choose the your blood type.
     </Say>
+    <Pause />
     <Say voice="woman">
       Press 1 for type A
     </Say>
+    <Pause />
     <Say voice="woman">
       Press 2 for type B
     </Say>
+    <Pause />
     <Say voice="woman">
       Press 3 for type O
     </Say>
+    <Pause />
     <Say voice="woman">
       Press 4 for type AB
     </Say>
+    <Pause />
     <Say voice="woman">
-      Press 0, if not known, and then enter the pound key.
+      Press 0, if not known,
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      and then enter the pound key.  
     </Say>
   </Gather>
 </Response>

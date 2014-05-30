@@ -10,9 +10,21 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 ?>
 <Response>
   <Gather action='<?php echo $actionUrl ?>' method='GET' finishOnKey='#' timeout="60">
+    <Pause />
     <Say voice="woman">
       We will register as {{ $date }} the date of vaccination of {{ $name }}.
-      Please press 1 if there is no problem,  press 0 if you want to correct, and then enter the pound key.
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      Please press 1 if there is no problem,
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      press 0 if you want to correct,
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      and then enter the pound key.
     </Say>
   </Gather>
 </Response>

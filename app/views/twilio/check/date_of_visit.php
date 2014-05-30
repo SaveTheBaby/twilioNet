@@ -10,11 +10,29 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 ?>
 <Response>
   <Gather action='<?php echo $actionUrl ?>' method='GET' finishOnKey='#' timeout="60">
+    <Pause />
     <Say voice="woman">
       Record periodic medical check-up
     </Say>
+    <Pause />
     <Say voice="woman">
-      Please input medical check-up day, day,month, year, and then enter the pound key.
+      Please input medical check-up day,
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      for instance month in two numbers,
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      day in two numbers,
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      year in four numbers,
+    </Say>
+    <Pause />
+    <Say voice="woman">
+       and then enter the pound key.
     </Say>
   </Gather>
 </Response>

@@ -11,11 +11,28 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 ?>
 <Response>
   <Gather action='<?php echo $actionUrl ?>' method='GET' finishOnKey='#' timeout="60">
-    <Say>
+    <Say voice="woman">
       Congratulations on the birth of your child!
     </Say>
-    <Say>
-      Please input baby's data. Please input baby's birthday month, day, year, and then enter the pound key.
+    <Pause />
+    <Say voice="woman">
+      Please input baby's data. 
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      Please input baby's birth month in two numbers, 
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      birth day in two numbers,  
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      birth year in four numbers, 
+    </Say>
+    <Pause />
+    <Say voice="woman">
+      and then enter the pound key.  
     </Say>
   </Gather>
 </Response>

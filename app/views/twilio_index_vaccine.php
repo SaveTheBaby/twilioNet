@@ -22,30 +22,39 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 ?>
 <Response>
   <Gather action='<?php echo $actionUrl ?>' method='GET' finishOnKey='#' timeout="60">
+    <Pause />
     <Say voice="woman">
       Baby's vaccination record
     </Say>
+    <Pause />
     <Say voice="woman">
       Please input the monther's 4-digit ID number and then enter the pound key.
     </Say>
+    <Pause />
     <Say voice="woman">
       Please choose Vaccine, and then enter the pound key.
     </Say>
+    <Pause />
     <Say voice="woman">
       Press 1 for BCG
     </Say>
+    <Pause />
     <Say voice="woman">
       Press 2 for DPT vaccine
     </Say>
+    <Pause />
     <Say voice="woman">
       Press 3 for OPV/Oral Polio Vaccine
     </Say>
+    <Pause />
     <Say voice="woman">
       Press 4 for HBV/Hepatitis B Virus
     </Say>
+    <Pause />
     <Say voice="woman">
       Press 5 for AMV/Ankara Modified Virus
     </Say>
+    <Pause />
     <Say voice="woman">
       Press 6 for MMR/Measles, Mumps, Rubella
     </Say>
