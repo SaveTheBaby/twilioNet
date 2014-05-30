@@ -90,7 +90,8 @@ __MESSAGE__
         </td>
         @endforeach
         <td class="text-center">
-          <?php if ($i==1) : ?>
+          <?php
+            if ($mother->baby()->count() == 0) : ?>
             &nbsp;
           <?php else : ?>
           <img src="{{ $mother->getHasBabyWithDiarrhea() ? asset('images/diarrhea.jpg') : asset('images/nothing.jpg') }}">
