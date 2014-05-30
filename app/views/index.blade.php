@@ -4,7 +4,7 @@
 <div class="header-explain panel panel-default">
   {{ nl2br(<<< __MESSAGE__
   [Explanation]
-  Please call +81-50-3159-6972 and follow the instruction to sign up as a mother. Once you complete the signup process, your information will be on the bottom of the Mother's List. Also, please check "How Dashboard for Doctors work" for more details.
+  Please call +81-50-3159-6972 and follow the instruction to sign up as a mother. Once you complete the signup process, your information will be on the bottom of the Mother's List. Also, please check "Dashboard for Medical Personnel" for more details.
   *Currently, international phone rates are applied for calling from outside Japan. To avoid this, we are going to set up Twilio phone numbers in different countries in the near feature.
 __MESSAGE__
   ) }}
@@ -90,12 +90,11 @@ __MESSAGE__
         </td>
         @endforeach
         <td class="text-center">
-          <?php
-            if ($mother->baby()->count() == 0) : ?>
-            &nbsp;
-          <?php else : ?>
+        <?php if ($mother->baby()->count() == 0) : ?>
+          <img src="{{ asset('images/null.jpg') }}">
+        <?php else : ?>
           <img src="{{ $mother->getHasBabyWithDiarrhea() ? asset('images/diarrhea.jpg') : asset('images/nothing.jpg') }}">
-          <?php endif; ?>
+        <?php endif; ?>
         </td>
         <td class="text-center">
           <a href="info/{{ $mother->id }}" class="btn {{  $btnClass }} btn-block btn-sm">Detail</a>
