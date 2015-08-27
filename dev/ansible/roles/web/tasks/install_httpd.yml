@@ -1,0 +1,47 @@
+---
+# These tasks install http and the php modules.
+- name: Install repositories
+  yum: name={{ item }} state=present
+  with_items:
+    - http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+    - http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+    - http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+
+- name: Install git,httpd and other
+  yum: pkg={{ item }} state=present enablerepo=rpmforge,remi,epel
+  with_items:
+    - git
+    - httpd
+    - mod_ssl
+    - mysql-server
+    - MySQL-python
+    - sqlite-devel
+    - openssl
+    - openssl-devel
+    - ruby-devel
+    - perl-devel
+
+- name: Install PHP5.5
+  yum: pkg={{ item }} state=present enablerepo=rpmforge,remi,remi-php55,epel
+  with_items:
+    - php
+    - php-devel
+    - php-mbstring
+    - php-mcrypt
+    - php-xml
+    - php-pear
+    - php-intl
+    - php-pecl-xdebug
+    - gd-last
+    - php-gd
+    - php-opcache
+    - php-mysqlnd
+    - phpMyAdmin
+
+- name: Install Development tools
+  yum: name="@Development tools" state=present enablerepo=rpmforge,remi,epel
+
+- name: install composer
+  shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin && mv /usr/bin/composer.phar /usr/bin/composer
+  args:
+    creates: /usr/bin/composer

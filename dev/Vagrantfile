@@ -1,0 +1,37 @@
+# encoding: utf-8
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+# vagrant-hostmanager
+# vagrant-vbox-snapshot
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  private_ip_address = "192.168.41.51"
+  hostname   = "savethebaby.dev"
+
+  config.hostmanager.enabled           = true
+  config.hostmanager.manage_host       = true
+  config.hostmanager.ignore_private_ip = false
+  config.hostmanager.include_offline   = true
+
+  config.vm.box = "CentOS-6.5-x86_64-v20150516-ansible-mailcatcher-lamp"
+  config.vm.box_url = "http://box.eyewill.co.jp/CentOS-6.5-x86_64-v20150516-ansible-mailcatcher-lamp.box"
+  config.vm.hostname = hostname
+  config.vm.network :private_network, ip: private_ip_address
+  config.vm.synced_folder "../", "/vagrant"
+  config.vm.synced_folder "./ansible", "/ansible", :mount_options => ['dmode=775', 'fmode=664']
+
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--memory", "512"]
+    vb.customize ["modifyvm", :id, "--name", hostname]
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+  end
+
+    config.vm.provision :shell, :path => "ansible/install.sh"
+    config.vm.provision :shell, :path => "ansible/install-rvm.sh", :args => "stable"
+    config.vm.provision :shell, :path => "ansible/install-mailcatcher.sh"
+end

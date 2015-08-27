@@ -1,0 +1,43 @@
+---
+# These tasks are responsible for copying the latest dev/production code from
+# the version control system. 
+
+- name: Update vhosts.conf
+  template: src=vhosts.conf.j2 dest=/etc/httpd/conf.d/vhosts.conf
+  notify:
+    - restart apache
+
+- name: Update phpMyAdmin.conf
+  template: src=phpMyAdmin.conf.j2 dest=/etc/httpd/conf.d/phpMyAdmin.conf
+  notify:
+    - restart apache
+
+- name: Update /etc/php.d/memory.ini
+  template: src=etc/php.d/memory.ini.j2 dest=/etc/php.d/memory.ini
+  notify:
+    - restart apache
+
+- name: Update .bash_profile
+  template: src=.bash_profile.j2 dest=/home/vagrant/.bash_profile
+
+- name: Update mailcatcher.conf
+  template: src=mailcatcher.conf.j2 dest=/etc/init/mailcatcher.conf
+
+- name: Update play.conf
+  template: src=play.conf.j2 dest=/etc/init/play.conf
+
+- name: Update my.cnf
+  template: src=my.cnf.j2 dest=/etc/my.cnf
+  notify:
+    - restart mysql
+
+- name: Update /etc/my.cnf.d/infile.cnf.cnf
+  template: src=etc/my.cnf.d/infile.cnf.j2 dest=/etc/my.cnf.d/infile.cnf
+  notify:
+    - restart mysql
+
+- name: Update ssl.conf
+  template: src=ssl.conf.j2 dest=/etc/httpd/conf.d/ssl.conf
+
+- name: change date UTC to JST
+  copy: src=/usr/share/zoneinfo/Asia/Tokyo dest=/etc/localtime

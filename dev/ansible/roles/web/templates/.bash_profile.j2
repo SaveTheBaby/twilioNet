@@ -1,0 +1,16 @@
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/bin:/vagrant/vendor/bin:/home/vagrant/.composer/vendor/bin
+APPLICATION_ENV=development
+
+export PATH
+export APPLICATION_ENV
+
+cd /vagrant

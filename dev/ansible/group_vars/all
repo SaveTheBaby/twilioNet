@@ -1,0 +1,11 @@
+---
+# Variables listed here are applicable to all host groups
+
+hostname: savethebaby
+server_name: savethebaby.dev
+databases:
+  - dbname: savethebaby_development
+    dbuser: vagrant
+    dbpassword: vagrant
+
+mysql_root_db_pass: vagrant

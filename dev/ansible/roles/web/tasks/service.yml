@@ -1,0 +1,29 @@
+- name: http service state
+  service: name=httpd state=running enabled=yes
+
+- name: iptables service state
+  service: name=iptables state=stopped enabled=no
+
+- name: ip6tables service state
+  service: name=ip6tables state=stopped enabled=no
+
+- name: be sure mysqld is running and enabled
+  service: name=mysqld state=running enabled=yes
+
+- name: update mysql root password for all root accounts
+  mysql_user: name=root host={{ item }} password={{ mysql_root_db_pass }}
+  with_items:
+   - "{{ ansible_hostname }}"
+   - 127.0.0.1
+   - ::1
+   - localhost
+  when: ansible_hostname != 'localhost'
+  ignore_errors: True
+
+- name: create database
+  mysql_db: name={{ item.dbname }} state=present login_user=root login_password={{ mysql_root_db_pass }} encoding=utf8
+  with_items: databases
+
+- name: create dbuser
+  mysql_user: name={{ item.dbuser }} password={{ item.dbpassword }} priv=*.*:ALL state=present login_user=root login_password={{ mysql_root_db_pass }}
+  with_items: databases

@@ -1,0 +1,9 @@
+---
+# This playbook deploys the whole application stack in this site.  
+
+- name: configure and deploy the webservers and application code
+  hosts: 127.0.0.1
+  connection: local
+  sudo: yes
+  roles:
+    - web

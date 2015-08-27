@@ -1,0 +1,15 @@
+---
+# Handler for the webtier: handlers are called by other plays.
+# See http://ansible.cc/docs/playbooks.html for more information about handlers.
+- name: yum update
+  command: yum -y update
+
+- name: restart iptables
+  service: name=iptables state=restarted
+
+- name: restart apache
+  service: name=httpd state=restarted
+
+- name: restart mysql
+  service: name=mysqld state=restarted
+
